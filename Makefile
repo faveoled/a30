@@ -15,6 +15,10 @@ NAME = Blurry Fish Butt
 # o Look for make include files relative to root of kernel src
 MAKEFLAGS += -rR --include-dir=$(CURDIR)
 
+
+export PLATFORM_VERSION=11
+export ANDROID_MAJOR_VERSION=r
+
 # Avoid funny character set dependencies
 unexport LC_ALL
 LC_COLLATE=C
