@@ -336,7 +336,7 @@ static int abox_start_ipc_transaction_atomic(struct device *dev,
 		break;
 	}
 
-	memcpy(tx_sram_base, supplement, size);
+	memcpy_toio(tx_sram_base, supplement, size);
 	writel(1, tx_ack_sram_base);
 	abox_gic_generate_interrupt(data->pdev_gic, hw_irq);
 
@@ -5101,7 +5101,7 @@ static int abox_download_firmware(struct platform_device *pdev)
 		return -EAGAIN;
 	}
 	memset_io(data->sram_base, 0, data->sram_size);
-	memcpy(data->sram_base, data->firmware_sram->data,
+	memcpy_toio(data->sram_base, data->firmware_sram->data,
 			data->firmware_sram->size);
 
 	if (!data->firmware_dram) {
@@ -5591,16 +5591,16 @@ static int abox_modem_notifier(struct notifier_block *nb,
 static int abox_itmon_notifier(struct notifier_block *nb,
 		unsigned long action, void *nb_data)
 {
-	struct abox_data *data = container_of(nb, struct abox_data, itmon_nb);
-	struct device *dev = &data->pdev->dev;
-	struct itmon_notifier *itmon_data = nb_data;
+	// struct abox_data *data = container_of(nb, struct abox_data, itmon_nb);
+	// struct device *dev = &data->pdev->dev;
+	// struct itmon_notifier *itmon_data = nb_data;
 
-	if (itmon_data && itmon_data->dest && (strncmp("ABOX", itmon_data->dest,
-			sizeof("ABOX") - 1) == 0)) {
-		dev_info(dev, "%s(%lu)\n", __func__, action);
-		data->enabled = false;
-		return NOTIFY_OK;
-	}
+	// if (itmon_data && itmon_data->dest && (strncmp("ABOX", itmon_data->dest,
+	// 		sizeof("ABOX") - 1) == 0)) {
+	// 	dev_info(dev, "%s(%lu)\n", __func__, action);
+	// 	data->enabled = false;
+	// 	return NOTIFY_OK;
+	// }
 
 	return NOTIFY_DONE;
 }
